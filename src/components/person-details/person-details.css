@@ -1,8 +1,13 @@
 .person-details {
   display: flex;
-  margin-top: 1rem;
   flex-direction: row;
   padding: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+  .person-details {    
+    margin-top: 1rem;
+  }
 }
 
 .person-details .person-image {
