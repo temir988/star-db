@@ -9,6 +9,7 @@ import PeoplePage from '../people-page/people-page';
 import Row from '../row'
 import SwapiService from '../../services/swapi-service';
 import ItemDetails, { Record } from '../item-details/item-details';
+import ItemList from '../item-list';
 
 export default class App extends React.Component {
 
@@ -57,17 +58,20 @@ export default class App extends React.Component {
       </ItemDetails>
     );
 
+    const list = (
+      <ItemList />
+    );
 
     return (
       <div className="container">
         <Header />
         <RandomPlanet />
 
-        {/* <PeoplePage />*/}
-        <Row
+        <PeoplePage />
+        {/* <Row
           left={personDetails}
           right={starshipDetails}
-        />        
+        /> */}
       </div>
     )
   };
