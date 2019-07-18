@@ -24,10 +24,19 @@ import {
 } from "../sw-components";
 
 export default class App extends React.Component {
-  swapiService = new SwapiService();
-
   state = {
-    hasError: false
+    hasError: false,
+    swapiService: new SwapiService()
+  };
+
+  onServiceChange = () => {
+    this.setState(({ swapiService }) => {
+      const Service =
+        swapiService instanceof SwapiService
+          ? "DummySwapiService"
+          : SwapiService;
+      console.log("switched to", Service);
+    });
   };
 
   render() {
@@ -40,7 +49,7 @@ export default class App extends React.Component {
       getStarship,
       getPersonImage,
       getStarshipImage
-    } = this.swapiService;
+    } = this.state.swapiService;
 
     const personDetails = (
       <ItemDetails itemId={11} getData={getPerson} getImageUrl={getPersonImage}>
@@ -65,9 +74,9 @@ export default class App extends React.Component {
 
     return (
       <ErrorBoundry>
-        <SwapiServiceProvider value={this.swapiService}>
+        <SwapiServiceProvider value={this.state.swapiService}>
           <div className="stardb-app">
-            <Header />
+            <Header onServiceChange={this.onServiceChange} />
 
             <PersonDetails itemId={11} />
 
