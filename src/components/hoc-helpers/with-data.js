@@ -6,6 +6,7 @@ const withData = View => {
   return class extends Component {
     state = {
       data: null,
+      loading: true,
       error: false
     };
 
@@ -20,28 +21,35 @@ const withData = View => {
     }
 
     update() {
+      this.setState({
+        loading: true,
+        error: false
+      });
+
       this.props
         .getData()
         .then(data => {
           this.setState({
-            data
+            data,
+            loading: false
           });
         })
-        .catch(e => {
+        .catch(() => {
           this.setState({
-            error: true
+            error: true,
+            loading: false
           });
         });
     }
 
     render() {
-      const { data, error } = this.state;
+      const { data, error, loading } = this.state;
 
       if (error) {
         return <ErrorIndicator />;
       }
 
-      if (!data) {
+      if (loading) {
         return <Spinner />;
       }
 
